@@ -1,0 +1,23 @@
+{
+  "name": "docker-nginx-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altenhofenlucas/docker-nginx-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/altenhofenlucas/docker-nginx-nodejs/issues"
+  },
+  "homepage": "https://github.com/altenhofenlucas/docker-nginx-nodejs#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
+  }
+}

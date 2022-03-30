@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  proxy:
+    container_name: proxy
+    build:
+      context: ./proxy
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - app-nodejs-network
+  app: 
+    container_name: app
+    build:
+      context: .
+    networks:
+      - app-nodejs-network
+    ports:
+      - "3000:3000"
+    command: sh -c "dockerize 
+      -wait tcp://mysql:3306 -timeout 20s -wait-retry-interval 3s 
+      -wait tcp://proxy:80 -timeout 20s -wait-retry-interval 3s 
+      node src/index.js"
+    depends_on:
+      - mysql
+      - proxy
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0 --init-file /data/application/init.sql
+    volumes:
+        - ./mysql/init.sql:/data/application/init.sql
+    restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: 'app'
+      MYSQL_ROOT_PASSWORD: 'pass'
+      MYSQL_USER: 'app'
+      MYSQL_PASSWORD: 'app'
+    networks:
+      - app-nodejs-network  
+
+networks:
+  app-nodejs-network:
+    driver: bridge
