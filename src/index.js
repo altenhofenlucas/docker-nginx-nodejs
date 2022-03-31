@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     database: 'app'
 })
 
-const personName = "Lucas"
+const personName = "Lucas Altenhofen"
 connection.query(`INSERT INTO people(name) VALUES('${personName}');`)
 
 const app = express()
